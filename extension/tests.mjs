@@ -130,11 +130,12 @@ for (const mainFirst of [true, false]) {
   assert.equal(MediaSource.isTypeSupported(avc), true);
   assert.equal((await capabilities.decodingInfo({ video: { contentType: hevc } })).supported, false);
   assert.equal(await capabilities.decodingInfo({ video: { contentType: avc } }), nativeResult);
+  location.pathname = '/in/shows/bigg-boss/1971002586/bbhin-day-56-who-has-the-real-rizz/1271702356/watch';
+  assert.equal(MediaSource.isTypeSupported(hevc), false, 'Show live watch routes without /live/ receive the AVC fallback');
+  assert.equal((await capabilities.decodingInfo({ video: { contentType: hevc } })).supported, false);
   location.pathname = '/in/shows/bbs20-24-hrs-channel-deferred/1271698275/live/watch';
   assert.equal(MediaSource.isTypeSupported(hevc), false, 'Show live routes receive the same compatibility fallback');
   assert.equal((await capabilities.decodingInfo({ video: { contentType: hevc } })).supported, false);
-  location.pathname = '/in/movies/example/123/watch';
-  assert.equal(MediaSource.isTypeSupported(hevc), true, 'VOD retains HEVC support');
   location.pathname = '/in/sports/cricket/match/1540082840/video/live/watch';
   events.dispatchEvent(new CustomEvent('hotstar-android:live-config', { detail: false }));
   assert.equal(MediaSource.isTypeSupported(hevc), true, 'Disabled mode retains native support');

@@ -2,7 +2,7 @@
   // Hotstar's TS converter drops HEVC video, then appends an undefined buffer.
   // Let its existing player negotiate AVC for live streams in the enabled tab.
   let active = false;
-  const block = type => active && location.pathname.includes('/live/') &&
+  const block = type => active &&
     typeof type === 'string' && /\b(?:hvc1|hev1|dvhe|dvh1)\b/i.test(type);
   document.addEventListener('hotstar-android:live-config', event => { active = event.detail === true; });
 
